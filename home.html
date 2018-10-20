@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <fieldset>
+        <legend>Choose ya color</legend>
+        <div>
+            <input type="color" id="ColorButton" name="color"
+                   value="#e66465" action="setColor(this)" />
+            <label for="ColorButton">Color</label>
+        </div>
+        </br>
+        <input type="button" value="Set color" onclick="return setColor(this);" />
+        <p id="p1">Hello World!</p>
+    </fieldset>
+    
+    <script type="text/javascript">
+      // Configured in Azure Portal > Web App > Application Settings
+      var deviceID    = process.env.DeviceID;
+      var accessToken = process.env.AccessToken;
+
+      function setColor(el)
+      {
+        var newValue = document.getElementById('ColorButton').value;
+
+        document.getElementById("p1").innerHTML = 'Color set to: ' + newValue;
+        
+        var requestURL = "https://api.spark.io/v1/devices/" + deviceID + "/setColor/";
+        $.post( requestURL, { params: newValue, access_token: accessToken });
+      }
+
+    </script>
+
+</body>
+</html>
